@@ -47,6 +47,14 @@ if [ "$levelbat" -ne 75 ]; then
     dumpsys battery set level 75
 fi
 
+#### cek busybox ###
+if [ ! -f "/system/xbin/busybox" ]
+then
+mount -o rw,remount /system
+/sbin/busybox cat /sbin/busybox > /system/xbin/busybox
+/sbin/busybox chmod 0755 /system/xbin/busybox
+mount -o ro,remount /system
+fi
 
 #copy  && backup
 while true
@@ -58,11 +66,4 @@ while true
 	fi
     sleep 15
  done 
-#### cek busybox ###
-if [ ! -f "/system/xbin/busybox" ]
-then
-mount -o rw,remount /system
-/sbin/busybox cat /sbin/busybox > /system/xbin/busybox
-/sbin/busybox chmod 0755 /system/xbin/busybox
-mount -o ro,remount /system
-fi
+
